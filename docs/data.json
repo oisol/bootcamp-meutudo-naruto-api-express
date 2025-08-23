@@ -1,0 +1,33 @@
+{
+  "ninjas": [
+    {
+      "id": 1,
+      "name": "Naruto Uzumaki",
+      "nation": "Fire Land",
+      "village": "Konohagakure",
+      "occupation": "Hokage",
+      "statistics": {
+        "ninjutsu": 95,
+        "taijutsu": 90,
+        "genjutsu": 85,
+        "speed": 70,
+        "stamina": 95
+      }
+    }
+  ]
+}
+
+
+{
+  "nations": [
+    {
+      "id": 1,
+      "name": "Fire Land",
+      "places": [
+        "Konohagakure",
+        "Fire Temple",
+        "Hacho Village"
+      ]
+    }
+  ]
+}
