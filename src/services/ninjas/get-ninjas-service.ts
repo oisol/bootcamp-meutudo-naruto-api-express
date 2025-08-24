@@ -1,8 +1,10 @@
+// repositories
+import { getNinjasRepository } from "../../repositories/ninjas-repository";
 //utils
 import { ok, noContent } from "../../utils/http-helper";
 
 export const getNinjasService = async () => {
-  const data = { hello: "world" };
+  const data = await getNinjasRepository();
   let response = null;
 
   if (data) {
