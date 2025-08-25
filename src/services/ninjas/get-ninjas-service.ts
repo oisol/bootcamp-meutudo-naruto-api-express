@@ -1,9 +1,19 @@
 // repositories
-import { getNinjasRepository, createNinjasRepository, updateNinjasRepository, deleteNinjasRepository } from "../../repositories/ninjas-repository";
+import {
+  getNinjasRepository,
+  createNinjasRepository,
+  updateNinjasRepository,
+  deleteNinjasRepository
+} from "../../repositories/ninjas-repository";
 // templates
-import { Ninja, NinjaInput } from "../../models/Ninja";
+import { NinjaInput } from "../../models/Ninja";
 //utils
-import { ok, noContent } from "../../utils/http-helper";
+import {
+  ok,
+  noContent,
+  badRequest,
+  created
+} from "../../utils/http-helper";
 
 export const getNinjasService = async () => {
   const data = await getNinjasRepository();
@@ -27,7 +37,7 @@ export const getNinjasService = async () => {
     // status code helper like a middleware
     response = await ok(dataRows);
   } else {
-    response = await noContent(dataRows);
+    response = await badRequest(dataRows);
   }
 
   return response;
@@ -35,6 +45,15 @@ export const getNinjasService = async () => {
 
 export const createNinjasService = async (input: NinjaInput) => {
   // add validation to min and max values latter
+  const data = await createNinjasRepository(input);
+  let response = null;
+
+  if (data) {
+    response = await created(data);
+  } else {
+    response = await badRequest(data);
+  }
+
   return await createNinjasRepository(input);
 }
 
