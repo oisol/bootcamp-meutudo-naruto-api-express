@@ -54,7 +54,7 @@ export const createNinjasService = async (input: NinjaInput) => {
     response = await badRequest(data);
   }
 
-  return await createNinjasRepository(input);
+  return response;
 }
 
 export async function updateNinjasService(id: number, input: NinjaInput) {

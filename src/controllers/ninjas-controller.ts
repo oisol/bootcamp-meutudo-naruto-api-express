@@ -28,7 +28,7 @@ export const createNinjas = async (req: Request, res: Response) => {
     // send the input to the service
     const httpResponse = await createNinjasService(input);
     res.status(httpResponse.statusCode).json(httpResponse.body);
-  } catch {
+  } catch (error) {
     res.json({ error: 'Error on create Ninja' });
   }
 }
