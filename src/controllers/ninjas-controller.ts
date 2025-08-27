@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 // services
 import {
   getNinjasService,
+  getNinjaByIdService,
   createNinjasService,
   updateNinjasService,
   deleteNinjasByIdService
@@ -18,6 +19,16 @@ export const getNinjas = async (req: Request, res: Response) => {
     res.status(httpResponse.statusCode).json(httpResponse.body);
   } catch (error) {
     res.json({ error: 'Error on search' });
+  }
+};
+
+export const getNinjaById = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    const httpResponse = await getNinjaByIdService(id);
+    res.status(httpResponse.statusCode).json(httpResponse.body);
+  } catch (error) {
+    res.json({ error: 'Error on search ninja by Id' });
   }
 };
 

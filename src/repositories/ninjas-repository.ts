@@ -1,6 +1,6 @@
 // repositories/ninjasRepository.ts
 import { pool } from '../configs/db';
-import { NinjaInput } from '../types/Ninja.js';
+import { NinjaInput, Ninja } from '../types/Ninja.js';
 
 // Get All
 export async function getNinjasRepository() {
@@ -21,10 +21,31 @@ export async function getNinjasRepository() {
     ORDER BY n.id;
   `;
 
-  const { rows } = await pool.query(query);
+  const { rows } = await pool.query<Ninja>(query);
   return rows;
 };
 
+export async function getNinjaByIdRepository(id: number) {
+  const query = `
+    SELECT 
+      n.id,
+      n.name,
+      n.village,
+      n.occupation,
+      na.name AS nation,
+      n.ninjutsu,
+      n.taijutsu,
+      n.genjutsu,
+      n.speed,
+      n.stamina
+    FROM ninjas n
+    JOIN nations na ON n.nation_id = na.id
+    WHERE n.id = $1;
+  `;
+
+  const { rows } = await pool.query<Ninja>(query, [id]);
+  return rows;
+};
 
 // Create
 export async function createNinjasRepository(input: NinjaInput) {

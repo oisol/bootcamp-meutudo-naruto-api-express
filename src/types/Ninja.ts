@@ -4,13 +4,13 @@ export interface Ninja {
   nation: string;
   village: string;
   occupation: string;
-  statistics: {
-    ninjutsu: number;
-    taijutsu: number;
-    genjutsu: number;
-    speed: number;
-    stamina: number;
-  };
+
+  ninjutsu: number;
+  taijutsu: number;
+  genjutsu: number;
+  speed: number;
+  stamina: number;
+
 }
 
 export interface NinjaInput {

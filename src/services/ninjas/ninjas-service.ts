@@ -1,12 +1,13 @@
 // repositories
 import {
   getNinjasRepository,
+  getNinjaByIdRepository,
   createNinjasRepository,
   updateNinjasRepository,
   deleteNinjasRepository
 } from "../../repositories/ninjas-repository";
 // templates
-import { NinjaInput } from "../../types/Ninja";
+import { Ninja, NinjaInput } from "../../types/Ninja";
 //utils
 import {
   ok,
@@ -35,19 +36,46 @@ export const getNinjasService = async () => {
   let response = null;
 
   if (dataRows) {
-    // status code helper like a middleware
     response = await ok(dataRows);
   } else {
     response = await noContent();
-  }
+  };
+
+  return response;
+};
+
+export const getNinjaByIdService = async (id: number) => {
+  let response = null;
+  const data: Ninja[] = await getNinjaByIdRepository(id);
+  const dataRows = data.map(n => ({
+    id: n.id,
+    name: n.name,
+    nation: n.nation,
+    village: n.village,
+    occupation: n.occupation,
+    statistics: {
+      ninjutsu: n.ninjutsu,
+      taijutsu: n.taijutsu,
+      genjutsu: n.genjutsu,
+      speed: n.speed,
+      stamina: n.stamina
+    }
+  }));
+
+  if (dataRows) {
+    response = await ok(dataRows);
+  } else {
+    response = await noContent();
+  };
 
   return response;
 };
 
 export const createNinjasService = async (input: NinjaInput) => {
   let response = null;
-
+  // validate the fields types and the number of fields
   if (validateNinjaInput(input) && Object.keys(input).length === 9) {
+    // validade if status is between 0 and 100
     if (validateNinjaStats(input)) {
       const data = await createNinjasRepository(input);
       response = await created(data);
