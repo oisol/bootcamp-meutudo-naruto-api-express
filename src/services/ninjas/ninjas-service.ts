@@ -6,7 +6,7 @@ import {
   deleteNinjasRepository
 } from "../../repositories/ninjas-repository";
 // templates
-import { NinjaInput } from "../../models/Ninja";
+import { NinjaInput } from "../../types/Ninja";
 //utils
 import {
   ok,
@@ -14,6 +14,7 @@ import {
   badRequest,
   created
 } from "../../utils/http-helper";
+import { validateNinjaInput, validateNinjaStats } from "../../utils/validate-ninja-input";
 
 export const getNinjasService = async () => {
   const data = await getNinjasRepository();
@@ -37,22 +38,25 @@ export const getNinjasService = async () => {
     // status code helper like a middleware
     response = await ok(dataRows);
   } else {
-    response = await badRequest(dataRows);
+    response = await noContent();
   }
 
   return response;
 };
 
 export const createNinjasService = async (input: NinjaInput) => {
-  // add validation to min and max values latter
-  const data = await createNinjasRepository(input);
   let response = null;
 
-  if (data) {
-    response = await created(data);
+  if (validateNinjaInput(input) && Object.keys(input).length === 9) {
+    if (validateNinjaStats(input)) {
+      const data = await createNinjasRepository(input);
+      response = await created(data);
+    } else {
+      response = await badRequest("Invalid stats values. stat must be between 0 and 100")
+    }
   } else {
-    response = await badRequest(data);
-  }
+    response = await badRequest("Invalid input.");
+  };
 
   return response;
 }

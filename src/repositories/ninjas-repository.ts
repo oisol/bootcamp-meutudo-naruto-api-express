@@ -1,6 +1,6 @@
 // repositories/ninjasRepository.ts
 import { pool } from '../configs/db';
-import { NinjaInput } from '../models/Ninja.js';
+import { NinjaInput } from '../types/Ninja.js';
 
 // Get All
 export async function getNinjasRepository() {
