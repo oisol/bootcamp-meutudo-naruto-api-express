@@ -5,9 +5,9 @@ import {
   createNinjasService,
   updateNinjasService,
   deleteNinjasByIdService
-} from "../services/ninjas/get-ninjas-service";
+} from "../services/ninjas/ninjas-service";
 // interfaces
-import { NinjaInput } from "../models/Ninja";
+import { NinjaInput } from "../types/Ninja";
 // utils
 import { created } from "../utils/http-helper";
 
@@ -27,9 +27,12 @@ export const createNinjas = async (req: Request, res: Response) => {
     const input: NinjaInput = req.body;
     // send the input to the service
     const httpResponse = await createNinjasService(input);
-    res.status(httpResponse.statusCode).json(httpResponse.body);
+
+    if (httpResponse) {
+      res.status(httpResponse.statusCode).json(httpResponse.body);
+    }
   } catch (error) {
-    res.json({ error: 'Error on create Ninja' });
+    res.json({ error: 'Error on create Ninja. ' + error });
   }
 }
 
