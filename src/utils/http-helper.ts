@@ -14,10 +14,10 @@ export const created = async (data: any): Promise<HttpResponse> => {
   }
 }
 
-export const noContent = async (): Promise<HttpResponse> => {
+export const noContent = async (message?: string): Promise<HttpResponse> => {
   return {
     statusCode: 204,
-    body: null
+    body: message || null
   }
 }
 

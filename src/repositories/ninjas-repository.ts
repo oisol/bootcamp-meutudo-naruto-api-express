@@ -3,7 +3,7 @@ import { pool } from '../configs/db';
 import { NinjaInput, Ninja } from '../types/Ninja.js';
 
 // Get All
-export async function getNinjasRepository() {
+export const getNinjasRepository = async () => {
   const query = `
     SELECT 
       n.id,
@@ -25,7 +25,7 @@ export async function getNinjasRepository() {
   return rows;
 };
 
-export async function getNinjaByIdRepository(id: number) {
+export const getNinjaByIdRepository = async (id: number) => {
   const query = `
     SELECT 
       n.id,
@@ -48,7 +48,7 @@ export async function getNinjaByIdRepository(id: number) {
 };
 
 // Create
-export async function createNinjasRepository(input: NinjaInput) {
+export const createNinjasRepository = async (input: NinjaInput) => {
   const query = `
     INSERT INTO ninjas (name, village, occupation, nation_id, ninjutsu, taijutsu, genjutsu, speed, stamina)
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
@@ -73,7 +73,7 @@ export async function createNinjasRepository(input: NinjaInput) {
 
 
 // Update
-export async function updateNinjasRepository(id: number, input: NinjaInput) {
+export const updateNinjasRepository = async (id: number, input: NinjaInput) => {
   const query = `
     UPDATE ninjas
     SET name=$1, village=$2, occupation=$3, nation_id=$4, 
@@ -98,7 +98,7 @@ export async function updateNinjasRepository(id: number, input: NinjaInput) {
 }
 
 // Delete // try with post next
-export async function deleteNinjasRepository(id: number) {
+export const deleteNinjasRepository = async (id: number) => {
   const query = `DELETE FROM ninjas WHERE id=$1 RETURNING *;`;
   const { rows } = await pool.query(query, [id]);
   return rows[0];

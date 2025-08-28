@@ -47,7 +47,7 @@ export const createNinjas = async (req: Request, res: Response) => {
   }
 }
 
-export async function updateNinjas(req: Request, res: Response) {
+export const updateNinjas = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const input: NinjaInput = req.body;
@@ -62,7 +62,7 @@ export async function updateNinjas(req: Request, res: Response) {
   }
 }
 
-export async function deleteNinjas(req: Request, res: Response) {
+export const deleteNinjas = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const ninja = await deleteNinjasByIdService(Number(id));

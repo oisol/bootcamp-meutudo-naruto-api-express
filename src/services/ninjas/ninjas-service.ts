@@ -62,10 +62,10 @@ export const getNinjaByIdService = async (id: number) => {
     }
   }));
 
-  if (dataRows) {
+  if (dataRows.length > 0) {
     response = await ok(dataRows);
   } else {
-    response = await noContent();
+    response = await noContent("Ninja not found.");
   };
 
   return response;
@@ -89,10 +89,10 @@ export const createNinjasService = async (input: NinjaInput) => {
   return response;
 }
 
-export async function updateNinjasService(id: number, input: NinjaInput) {
+export const updateNinjasService = async (id: number, input: NinjaInput) => {
   return await updateNinjasRepository(id, input);
 }
 
-export async function deleteNinjasByIdService(id: number) {
+export const deleteNinjasByIdService = async (id: number) => {
   return await deleteNinjasRepository(id);
 }
