@@ -7,6 +7,9 @@ import {
   updateNinjas,
   deleteNinjas
 } from "./controllers/ninjas-controller";
+import {
+  getNations
+} from "./controllers/nations-controller";
 
 // routes manager 
 const router = Router();
@@ -17,5 +20,6 @@ router.get("/ninjas/:id", getNinjaById);
 router.post("/ninjas", createNinjas);
 router.put("/ninjas/:id", updateNinjas);
 router.delete("/ninjas/:id", deleteNinjas);
-
+// Nations 
+router.get("/nations", getNations);
 export default router;

@@ -39,9 +39,9 @@ export const getNinjasService = async () => {
   let response = null;
 
   if (dataRows) {
-    response = await ok(dataRows);
+    response = ok(dataRows);
   } else {
-    response = await noContent();
+    response = noContent();
   };
 
   return response;
@@ -66,9 +66,9 @@ export const getNinjaByIdService = async (id: number) => {
   }));
 
   if (dataRows.length > 0) {
-    response = await ok(dataRows);
+    response = ok(dataRows);
   } else {
-    response = await noContent("Ninja not found.");
+    response = noContent("Ninja not found.");
   };
 
   return response;
@@ -81,12 +81,12 @@ export const createNinjasService = async (input: NinjaInput) => {
     // validade if status is between 0 and 100
     if (validateNinjaStats(input)) {
       const data = await createNinjasRepository(input);
-      response = await created(data);
+      response = created(data);
     } else {
-      response = await badRequest("Invalid stats values. stat must be between 0 and 100")
+      response = badRequest("Invalid stats values. stat must be between 0 and 100")
     }
   } else {
-    response = await badRequest("Invalid input.");
+    response = badRequest("Invalid input.");
   };
 
   return response;
@@ -100,12 +100,12 @@ export const updateNinjasService = async (id: number, input: NinjaInput) => {
     if (validateNinjaStats(input)) {
       // send the query to the repository
       const data = await updateNinjasRepository(id, input);
-      response = await ok(data);
+      response = ok(data);
     } else {
-      response = await badRequest("Invalid stats values. stat must be between 0 and 100")
+      response = badRequest("Invalid stats values. stat must be between 0 and 100")
     }
   } else {
-    response = await badRequest("Invalid input.");
+    response = badRequest("Invalid input.");
   };
 
   return response;
@@ -117,9 +117,9 @@ export const deleteNinjasByIdService = async (id: number) => {
   const isDeleted = await deleteNinjasRepository(id);
   // check if already deleted
   if (isDeleted) {
-    response = await ok({ message: "Ninja deleted" });
+    response = ok({ message: "Ninja deleted" });
   } else {
-    response = await badRequest("Ninja not found or already deleted");
+    response = badRequest("Ninja not found or already deleted");
   }
 
   return response;
