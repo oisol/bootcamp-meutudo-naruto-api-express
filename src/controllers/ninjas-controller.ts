@@ -49,7 +49,7 @@ export const createNinjas = async (req: Request, res: Response) => {
 
 export const updateNinjas = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = parseInt(req.params.id);
     const input: NinjaInput = req.body;
     const ninja = await updateNinjasService(Number(id), input);
 
@@ -62,14 +62,13 @@ export const updateNinjas = async (req: Request, res: Response) => {
   }
 }
 
+// Concluindo delete 
 export const deleteNinjas = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const ninja = await deleteNinjasByIdService(Number(id));
-    if (!ninja) {
-      return res.status(404).json({ error: 'Ninja não encontrado' });
-    }
-    res.json({ message: 'Ninja deleted', ninja });
+    const id = parseInt(req.params.id);
+    const httpResponse = await deleteNinjasByIdService(Number(id));
+
+    res.status(httpResponse.statusCode).json(httpResponse.body);
   } catch (error) {
     res.status(500).json({ error: 'Error on deleting Ninja' });
   }

@@ -15,7 +15,10 @@ import {
   badRequest,
   created
 } from "../../utils/http-helper";
-import { validateNinjaInput, validateNinjaStats } from "../../utils/validate-ninja-input";
+import {
+  validateNinjaInput,
+  validateNinjaStats
+} from "../../utils/validate-ninja-input";
 
 export const getNinjasService = async () => {
   const data = await getNinjasRepository();
@@ -94,5 +97,15 @@ export const updateNinjasService = async (id: number, input: NinjaInput) => {
 }
 
 export const deleteNinjasByIdService = async (id: number) => {
-  return await deleteNinjasRepository(id);
+  let response = null;
+
+  const isDeleted = await deleteNinjasRepository(id);
+  // check if already deleted
+  if (isDeleted) {
+    response = await ok({ message: "Ninja deleted" });
+  } else {
+    response = await badRequest("Ninja not found or already deleted");
+  }
+
+  return response;
 }
