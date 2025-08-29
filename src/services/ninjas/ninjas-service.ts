@@ -93,7 +93,22 @@ export const createNinjasService = async (input: NinjaInput) => {
 }
 
 export const updateNinjasService = async (id: number, input: NinjaInput) => {
-  return await updateNinjasRepository(id, input);
+  let response = null;
+  // validate the fields types and the number of fields
+  if (validateNinjaInput(input) && Object.keys(input).length === 9) {
+    // validade if status is between 0 and 100
+    if (validateNinjaStats(input)) {
+      // send the query to the repository
+      const data = await updateNinjasRepository(id, input);
+      response = await ok(data);
+    } else {
+      response = await badRequest("Invalid stats values. stat must be between 0 and 100")
+    }
+  } else {
+    response = await badRequest("Invalid input.");
+  };
+
+  return response;
 }
 
 export const deleteNinjasByIdService = async (id: number) => {

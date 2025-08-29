@@ -51,12 +51,11 @@ export const updateNinjas = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const input: NinjaInput = req.body;
-    const ninja = await updateNinjasService(Number(id), input);
+    const httpResponse = await updateNinjasService(Number(id), input);
 
-    if (!ninja) {
-      return res.status(404).json({ error: 'Ninja not found' });
+    if (httpResponse) {
+      res.status(httpResponse.statusCode).json(httpResponse.body);
     }
-    res.json(ninja);
   } catch (error) {
     res.status(500).json({ error: 'Error on update Ninja' });
   }
